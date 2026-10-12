@@ -1,0 +1,20 @@
+export const site = {
+  name: "FinAssetZ",
+  legal: "FinAssetZ Investment Services",
+  short: "FAIS",
+  login: "https://finassetz.wealthmagic.in/",
+  email: "info@finassetz.com",
+  phoneDisplay: "+91 99406 53299",
+  phoneTel: "+919940653299",
+  whatsapp: "https://wa.me/919940653299",
+  linkedin: "https://www.linkedin.com/in/arunsaladi",
+  linkedinCompany: "https://www.linkedin.com/company/finassetz-investment-services",
+  address: "29th Cross Street, Besant Nagar, Chennai 600 090, Tamil Nadu, India.",
+  links: [
+    { label: "NSE", href: "https://www.nseindia.com/" },
+    { label: "BSE", href: "https://www.bseindia.com/" },
+    { label: "Moneycontrol", href: "https://www.moneycontrol.com/" },
+    { label: "CCIL", href: "https://www.ccilindia.com/" },
+    { label: "RBI", href: "https://www.rbi.org.in/" },
+  ],
+};
