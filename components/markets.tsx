@@ -1,7 +1,6 @@
 "use client";
 
 import { formatNum, formatSigned } from "@/lib/format";
-import { site } from "@/lib/site";
 import type { MarketsResponse, Quote } from "@/lib/types";
 import { createContext, useCallback, useContext, useEffect, useState } from "react";
 
@@ -175,23 +174,6 @@ export function MarketBoard() {
         ) : (
           <p className="banner">{data.notice}</p>
         )}
-        <div className="useful">
-          <p>Useful sites</p>
-          <ul>
-            {site.links.map((link) => (
-              <li key={link.href}>
-                <a href={link.href} target="_blank" rel="noopener noreferrer">
-                  {link.label}
-                </a>
-              </li>
-            ))}
-            <li>
-              <a href={site.linkedinCompany} target="_blank" rel="noopener noreferrer">
-                LinkedIn
-              </a>
-            </li>
-          </ul>
-        </div>
         <p className="fine">{data.notice}</p>
       </div>
     </section>

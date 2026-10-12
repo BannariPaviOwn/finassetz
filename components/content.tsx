@@ -77,6 +77,36 @@ export function About() {
   );
 }
 
+const siteNotes: Record<string, string> = {
+  NSE: "National Stock Exchange",
+  BSE: "BSE India",
+  Moneycontrol: "Markets and news",
+  CCIL: "Clearing Corporation of India",
+  RBI: "Reserve Bank of India",
+};
+
+export function UsefulSites() {
+  return (
+    <section className="section" id="links">
+      <div className="wrap">
+        <div className="section-head">
+          <h2>Useful sites</h2>
+          <p>The exchanges, the clearing house and the Reserve Bank, opened from this page.</p>
+        </div>
+        <div className="site-list">
+          {site.links.map((link) => (
+            <a key={link.href} href={link.href} target="_blank" rel="noopener noreferrer">
+              <span>{siteNotes[link.label]}</span>
+              <strong>{link.label}</strong>
+              <em>Open</em>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 export function Leadership() {
   return (
     <section className="section section-dark" id="leadership">

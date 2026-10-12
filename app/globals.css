@@ -253,40 +253,63 @@ p { margin: 0 0 1rem; }
 .stats dd { margin: 2px 0 0; color: var(--navy); font-weight: 650; font-variant-numeric: tabular-nums; }
 .range, .asof { margin: 12px 0 0; color: var(--muted); font-size: 0.9rem; }
 .banner { background: white; border: 1px solid var(--line); border-radius: 16px; padding: 18px; }
-.useful {
+.site-list { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; }
+.site-list a {
+  position: relative;
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  margin-top: 18px;
-  padding: 14px 18px;
+  flex-direction: column;
+  align-items: flex-start;
+  min-height: 188px;
+  padding: 22px 18px 18px;
+  overflow: hidden;
   background: white;
-  border: 1px solid var(--line);
-  border-radius: 18px;
+  border: 1px solid rgba(12, 35, 64, 0.08);
+  border-radius: 22px;
+  box-shadow: 0 16px 40px rgba(12, 35, 64, 0.05);
+  color: var(--navy);
+  text-decoration: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
 }
-.useful p {
-  margin: 0;
+.site-list a::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 18px;
+  right: 18px;
+  height: 3px;
+  border-radius: 0 0 4px 4px;
+  background: var(--blue);
+}
+.site-list span {
   color: var(--blue-deep);
   font-size: 0.75rem;
   font-weight: 700;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
-  white-space: nowrap;
+  line-height: 1.35;
 }
-.useful ul { list-style: none; display: flex; flex-wrap: wrap; gap: 8px; margin: 0; padding: 0; }
-.useful a {
-  display: inline-flex;
-  align-items: center;
-  padding: 7px 12px;
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  background: var(--ice);
-  color: var(--navy);
-  font-size: 0.92rem;
-  font-weight: 650;
-  text-decoration: none;
+.site-list strong {
+  margin-top: auto;
+  padding-top: 24px;
+  font-family: var(--font-display), Georgia, serif;
+  font-size: 1.55rem;
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
 }
-.useful a:hover { border-color: var(--blue); color: var(--blue-deep); }
+.site-list em {
+  margin-top: 10px;
+  color: var(--blue-deep);
+  font-style: normal;
+  font-size: 0.88rem;
+  font-weight: 700;
+}
+.site-list em::after { content: " \2192"; }
+.site-list a:hover {
+  border-color: rgba(42, 165, 221, 0.55);
+  box-shadow: 0 22px 48px rgba(12, 35, 64, 0.1);
+  transform: translateY(-3px);
+}
 
 .rates-layout { display: grid; grid-template-columns: 0.85fr 1.15fr; gap: 48px; align-items: flex-start; }
 .rates-copy h2 { margin: 0 0 14px; font-size: clamp(2.3rem, 4vw, 3.5rem); line-height: 1.02; }
@@ -672,6 +695,8 @@ body.service-open .wa { visibility: hidden; }
   .leader-top { display: flex; flex-direction: column-reverse; align-items: flex-start; gap: 16px; }
   .leader-photo { width: 240px; height: 240px; border-radius: 32px; grid-column: auto; grid-row: auto; }
   .service-grid { grid-template-columns: 1fr 1fr; }
+  .site-list { grid-template-columns: 1fr 1fr; }
+  .site-list a { min-height: 0; }
   .service { min-height: 0; }
   .hero { padding-top: 42px; }
   .hero h1 { font-size: clamp(3.4rem, 16vw, 5.5rem); }
@@ -680,13 +705,13 @@ body.service-open .wa { visibility: hidden; }
 
 @media (max-width: 640px) {
   .service-grid { grid-template-columns: 1fr; }
+  .site-list { grid-template-columns: 1fr; }
   .service-dialog img { height: 190px; }
   .service-dialog-body { padding: 22px 18px 24px; }
   .stats { grid-template-columns: 1fr 1fr; }
   .ticker { flex-direction: column; gap: 0; padding-bottom: 8px; }
   .ticker-meta { justify-content: space-between; }
   .quote-price { font-size: 2.4rem; }
-  .useful { flex-direction: column; align-items: flex-start; }
   .rate-row { grid-template-columns: 1fr auto; margin-left: 22px; }
   .acc-note { padding-left: 22px; }
   .wa { right: 16px; left: auto; }
@@ -696,6 +721,7 @@ body.service-open .wa { visibility: hidden; }
   html { scroll-behavior: auto; }
   .acc-panel, .acc-head svg { transition: none; }
   .service { transition: none; }
+  .site-list a { transition: none; }
   .tape-track { animation: none; }
   .tape-window { overflow-x: auto; mask-image: none; -webkit-mask-image: none; }
 }
