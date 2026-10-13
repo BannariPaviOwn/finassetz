@@ -1,14 +1,10 @@
-"use client";
-
-import { useEffect, useId, useRef, useState } from "react";
-import { createPortal } from "react-dom";
-
 const marketNote =
   "This is how the desk works through the process. It is not a recommendation and it does not indicate a return. Suitability depends on the product documents and your own circumstances.";
 
 type Step = { title: string; text: string };
 
 type Service = {
+  slug: string;
   title: string;
   copy: string;
   image: string;
@@ -18,8 +14,9 @@ type Service = {
   note: string;
 };
 
-const services: Service[] = [
+export const services: Service[] = [
   {
+    slug: "mutual-funds",
     title: "Mutual Fund Distribution",
     copy: "Need-based funds for individuals, families, corporates and institutions.",
     image: "/services/mutual-funds.jpg",
@@ -51,6 +48,7 @@ const services: Service[] = [
     note: `${marketNote} Mutual fund investments are subject to market risks. Read all scheme-related documents carefully.`,
   },
   {
+    slug: "specialised-investment-funds",
     title: "Specialised Investment Funds",
     copy: "SIFs distributed through the same fund practice.",
     image: "/services/sif.jpg",
@@ -82,6 +80,7 @@ const services: Service[] = [
     note: marketNote,
   },
   {
+    slug: "fixed-income-bonds",
     title: "Fixed Income Bonds",
     copy: "Bond distribution for clients allocating to fixed income.",
     image: "/services/bonds.jpg",
@@ -113,6 +112,7 @@ const services: Service[] = [
     note: `${marketNote} A bond can fall in price, and an issuer can fail to pay. Past coupons are not a promise of the next one.`,
   },
   {
+    slug: "portfolio-management-schemes",
     title: "Portfolio Management Schemes",
     copy: "PMS distribution for clients who want a managed portfolio.",
     image: "/services/pms.jpg",
@@ -144,6 +144,7 @@ const services: Service[] = [
     note: marketNote,
   },
   {
+    slug: "investment-banking",
     title: "Investment Banking",
     copy: "Investment banking mandates, handled with the same desk.",
     image: "/services/banking.jpg",
@@ -175,6 +176,7 @@ const services: Service[] = [
     note: "A mandate is not an offer to the public and it is not a promise that a transaction will complete.",
   },
   {
+    slug: "listed-and-private-markets",
     title: "Equities, AIFs, REITs, InvITs",
     copy: "Listed equities and private-market products, including AIFs, REITs and InvITs.",
     image: "/services/markets.jpg",
@@ -206,6 +208,7 @@ const services: Service[] = [
     note: `${marketNote} Listed prices can fall. Private-market holdings can be difficult to sell.`,
   },
   {
+    slug: "insurance",
     title: "General & Health Insurance",
     copy: "General and health cover, placed alongside the investments.",
     image: "/services/insurance.jpg",
@@ -237,6 +240,7 @@ const services: Service[] = [
     note: "Cover exists only as the policy wording describes it. Premiums and terms are set by the insurer.",
   },
   {
+    slug: "tax-planning",
     title: "Tax Planning",
     copy: "Tax planning kept in the same conversation as the portfolio.",
     image: "/services/tax.jpg",
@@ -269,31 +273,11 @@ const services: Service[] = [
   },
 ];
 
+export function getService(slug: string) {
+  return services.find((item) => item.slug === slug);
+}
+
 export function Services() {
-  const [active, setActive] = useState<number | null>(null);
-  const closeRef = useRef<HTMLButtonElement>(null);
-  const cardRefs = useRef<(HTMLButtonElement | null)[]>([]);
-  const titleId = useId();
-  const service = active === null ? null : services[active];
-
-  useEffect(() => {
-    if (active === null) return;
-    const previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    document.body.classList.add("service-open");
-    closeRef.current?.focus();
-    const onKey = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setActive(null);
-    };
-    window.addEventListener("keydown", onKey);
-    return () => {
-      document.body.style.overflow = previousOverflow;
-      document.body.classList.remove("service-open");
-      window.removeEventListener("keydown", onKey);
-      cardRefs.current[active]?.focus();
-    };
-  }, [active]);
-
   return (
     <section className="section section-ice" id="services">
       <div className="wrap">
@@ -304,68 +288,15 @@ export function Services() {
         </div>
         <div className="service-grid">
           {services.map((item, index) => (
-            <button
-              className="service"
-              key={item.title}
-              type="button"
-              ref={(node) => {
-                cardRefs.current[index] = node;
-              }}
-              onClick={() => setActive(index)}
-            >
+            <a className="service" key={item.slug} href={`/services/${item.slug}`}>
               <span className="service-index">{String(index + 1).padStart(2, "0")}</span>
               <h3>{item.title}</h3>
               <p>{item.copy}</p>
               <span className="service-more">Know more</span>
-            </button>
+            </a>
           ))}
         </div>
       </div>
-      {service
-        ? createPortal(
-        <div className="service-modal" onClick={() => setActive(null)}>
-          <div
-            className="service-dialog"
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby={titleId}
-            onClick={(event) => event.stopPropagation()}
-          >
-            <button
-              className="service-close"
-              type="button"
-              aria-label="Close"
-              ref={closeRef}
-              onClick={() => setActive(null)}
-            >
-              ×
-            </button>
-            <img src={service.image} alt={service.imageAlt} />
-            <div className="service-dialog-body">
-              <p className="eyebrow">{String((active ?? 0) + 1).padStart(2, "0")} — The process</p>
-              <h3 id={titleId}>{service.title}</h3>
-              <p className="service-summary">{service.summary}</p>
-              <ol className="service-steps">
-                {service.steps.map((step, index) => (
-                  <li key={step.title}>
-                    <span>{String(index + 1).padStart(2, "0")}</span>
-                    <div>
-                      <strong>{step.title}</strong>
-                      <p>{step.text}</p>
-                    </div>
-                  </li>
-                ))}
-              </ol>
-              <p className="service-note">{service.note}</p>
-              <a className="btn btn-solid" href="#contact" onClick={() => setActive(null)}>
-                Speak with us
-              </a>
-            </div>
-          </div>
-        </div>,
-        document.body,
-      )
-        : null}
     </section>
   );
 }

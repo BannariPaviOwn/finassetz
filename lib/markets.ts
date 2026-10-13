@@ -97,12 +97,13 @@ async function load(): Promise<MarketsResponse> {
   if (!indices.length) {
     return empty("Nifty and Sensex quotes are temporarily unavailable.");
   }
+  const updatedAt = formatWhen(new Date());
   return {
     ok: true,
-    updatedAt: formatWhen(new Date()),
-    indices,
+    updatedAt,
+    indices: indices.map((quote) => ({ ...quote, asOf: updatedAt })),
     notice:
-      "Delayed public quotes for Nifty 50 and S&P BSE Sensex. Refreshed about once a minute. For information only — not a live exchange feed and not investment advice.",
+      "Delayed public quotes for Nifty 50 and S&P BSE Sensex, checked together. Refreshed about once a minute. For information only — not a live exchange feed and not investment advice.",
   };
 }
 

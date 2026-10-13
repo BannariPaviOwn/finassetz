@@ -47,7 +47,9 @@ export function Hero() {
               <li key={item}>{item}</li>
             ))}
           </ul>
-          <p className="hero-hours">Client desk · 24×7</p>
+          <p className="hero-hours">
+            Messages accepted 24×7 by phone, email or WhatsApp. This is not a staffed trading desk.
+          </p>
         </aside>
       </div>
     </section>
@@ -171,7 +173,10 @@ export function Contact() {
           <a href={site.whatsapp} target="_blank" rel="noopener noreferrer">
             Message us on WhatsApp
           </a>
-          <p>Client desk · 24×7</p>
+          <p>
+            You can call, email or send a WhatsApp message at any hour. The message waits for the
+            Chennai desk. It is not a trading floor staffed overnight.
+          </p>
         </div>
       </div>
     </section>
@@ -186,8 +191,9 @@ export function Footer() {
           <div>
             <strong>FinAssetZ</strong>
             <ul className="reg-marks">
-              <li>AMFI registered mutual fund distributor and SIF distributor</li>
-              <li>APMI registered PMS distributor</li>
+              <li>AMFI-registered mutual fund distributor and SIF distributor. The ARN is confirmed by the desk before an application. It is not printed on this site.</li>
+              <li>APMI-registered PMS distributor. The APMI registration number is confirmed by the desk before a PMS application.</li>
+              <li>No IRDAI registration number is published here. Insurance is placed with the insurer named on the policy.</li>
             </ul>
           </div>
           <div>
@@ -218,6 +224,26 @@ export function Footer() {
         </div>
         <div className="legal">
           <p>Mutual fund investments are subject to market risks. Read all scheme-related documents carefully.</p>
+          <p>
+            Portfolio management schemes are subject to market risks. Read the disclosure document and the
+            provider’s agreement carefully. FinAssetZ distributes the scheme. The portfolio manager runs it.
+          </p>
+          <p>
+            Insurance cover, exclusions and claims follow the insurer’s policy. A conversation with the desk
+            does not create cover.
+          </p>
+          <p>
+            Grievance redressal: {site.email}, {site.phoneDisplay}. For a securities complaint you can also use{" "}
+            <a href="https://scores.sebi.gov.in/" target="_blank" rel="noopener noreferrer">
+              SEBI SCORES
+            </a>
+            .
+          </p>
+          <p className="footer-links">
+            <a href="/privacy">Privacy</a>
+            <a href="/terms">Terms</a>
+            <a href="/terms#grievance">Grievance redressal</a>
+          </p>
           <p>Copyright © {new Date().getFullYear()} FinAssetZ. All rights reserved.</p>
         </div>
       </div>

@@ -4,20 +4,36 @@ import { formatNum, formatSigned } from "@/lib/format";
 import type { TapeResponse } from "@/lib/types";
 import { useEffect, useState } from "react";
 
+const TIMEOUT_MS = 20_000;
+
 export function ShareTape() {
   const [data, setData] = useState<TapeResponse | null>(null);
+  const [status, setStatus] = useState<"loading" | "ready" | "error">("loading");
+  const [notice, setNotice] = useState("Nifty 50 share prices are temporarily unavailable.");
 
   useEffect(() => {
     let stop = false;
 
     async function pull() {
+      const controller = new AbortController();
+      const timer = window.setTimeout(() => controller.abort(), TIMEOUT_MS);
       try {
-        const response = await fetch("/api/tape", { cache: "no-store" });
-        if (!response.ok || stop) return;
+        const response = await fetch("/api/tape", { cache: "no-store", signal: controller.signal });
         const next = (await response.json()) as TapeResponse;
-        if (next.ok) setData(next);
+        if (stop) return;
+        if (!response.ok || !next.ok || next.shares.length === 0) {
+          setNotice(next.notice || "Nifty 50 share prices are temporarily unavailable.");
+          setStatus((current) => (current === "ready" ? "ready" : "error"));
+          return;
+        }
+        setData(next);
+        setStatus("ready");
       } catch {
-        /* Keep the last tape on screen. */
+        if (stop) return;
+        setNotice("Nifty 50 share prices could not be loaded. They will be tried again in a minute.");
+        setStatus((current) => (current === "ready" ? "ready" : "error"));
+      } finally {
+        window.clearTimeout(timer);
       }
     }
 
@@ -56,7 +72,9 @@ export function ShareTape() {
           </div>
         </div>
       ) : (
-        <p className="tape-wait">Loading Nifty 50 shares…</p>
+        <p className={status === "error" ? "tape-wait tape-error" : "tape-wait"} role={status === "error" ? "alert" : "status"}>
+          {status === "error" ? notice : "Loading Nifty 50 shares…"}
+        </p>
       )}
     </section>
   );

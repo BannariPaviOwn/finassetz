@@ -19,7 +19,11 @@ export function Header() {
     <header className="header">
       <a className="brand" href="#top">
         <span className="mark" aria-hidden>
-          Fz
+          <svg viewBox="0 0 32 32">
+            <path d="M8 23.5 13.2 11" />
+            <path d="M14.2 25 19.6 9.5" />
+            <path d="M20.4 26.5 26.2 8" />
+          </svg>
         </span>
         <span>
           <strong>FinAssetZ</strong>

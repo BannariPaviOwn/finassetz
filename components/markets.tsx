@@ -110,7 +110,7 @@ export function Ticker() {
         )}
       </div>
       <div className="ticker-meta">
-        <span>{data.indices[0]?.asOf ? `As of ${data.indices[0].asOf} IST` : "Quotes unavailable"}</span>
+        <span>{data.ok ? `As of ${data.updatedAt} IST` : "Quotes unavailable"}</span>
         <button type="button" onClick={refresh} disabled={refreshing}>
           {refreshing ? "Updating" : "Refresh"}
         </button>
@@ -167,7 +167,7 @@ export function MarketBoard() {
                 <p className="range">
                   52-week {formatNum(quote.fiftyTwoWeekLow)} – {formatNum(quote.fiftyTwoWeekHigh)}
                 </p>
-                <p className="asof">As of {quote.asOf} IST</p>
+                <p className="asof">As of {data.updatedAt} IST</p>
               </article>
             ))}
           </div>
