@@ -276,27 +276,3 @@ export const services: Service[] = [
 export function getService(slug: string) {
   return services.find((item) => item.slug === slug);
 }
-
-export function Services() {
-  return (
-    <section className="section section-ice" id="services">
-      <div className="wrap">
-        <p className="eyebrow">04 — What we distribute</p>
-        <div className="section-head">
-          <h2>Products and services</h2>
-          <p>Need-based distribution across funds, fixed income, markets, insurance and tax planning.</p>
-        </div>
-        <div className="service-grid">
-          {services.map((item, index) => (
-            <a className="service" key={item.slug} href={`/services/${item.slug}`}>
-              <span className="service-index">{String(index + 1).padStart(2, "0")}</span>
-              <h3>{item.title}</h3>
-              <p>{item.copy}</p>
-              <span className="service-more">Know more</span>
-            </a>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
